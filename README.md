@@ -48,7 +48,7 @@ venv\Scripts\activate      # Windows
 
 pip install -r requirements.txt
 ```
-### Hướng dẫn chạy code
+## Hướng dẫn chạy code
 1. Chuẩn bị dữ liệu
 Đặt file dữ liệu gốc mbti_1.csv vào thư mục data/.
 File này sẽ được xử lý thành nhiều version khác nhau trong quá trình chạy.
