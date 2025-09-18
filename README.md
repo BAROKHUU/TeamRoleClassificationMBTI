@@ -99,4 +99,7 @@ Output: multiclass_model/confusion_matrix_test.png + classification report
 
 
 6. Demo Inference
+```bash
+jupyter notebook demo.ipynb
+```
 Mở notebook và chạy các cell để mở UI qua Gradio 
