@@ -71,6 +71,7 @@ Output: data/mbti_1_augmentednclean.csv
 
 
 4. Training
+
 4.1. Binary classification
 ```bash
 python src/3.1_training_binary.py
@@ -85,6 +86,7 @@ Output: mô hình XGBoost đa lớp trong thư mục multiclass_model/
 
 
 5. Evaluation
+
 5.1. Logistic Regression baseline (binary)
 ```bash
 python src/4.1_evaBIN.py
