@@ -1,0 +1,38 @@
+{
+  "label2id": {
+    "ENFJ": 0,
+    "ENFP": 1,
+    "ENTJ": 2,
+    "ENTP": 3,
+    "ESFJ": 4,
+    "ESFP": 5,
+    "ESTJ": 6,
+    "ESTP": 7,
+    "INFJ": 8,
+    "INFP": 9,
+    "INTJ": 10,
+    "INTP": 11,
+    "ISFJ": 12,
+    "ISFP": 13,
+    "ISTJ": 14,
+    "ISTP": 15
+  },
+  "id2label": {
+    "0": "ENFJ",
+    "1": "ENFP",
+    "2": "ENTJ",
+    "3": "ENTP",
+    "4": "ESFJ",
+    "5": "ESFP",
+    "6": "ESTJ",
+    "7": "ESTP",
+    "8": "INFJ",
+    "9": "INFP",
+    "10": "INTJ",
+    "11": "INTP",
+    "12": "ISFJ",
+    "13": "ISFP",
+    "14": "ISTJ",
+    "15": "ISTP"
+  }
+}
