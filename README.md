@@ -6,34 +6,29 @@ Dự án này xây dựng một hệ thống phân loại **MBTI personality typ
 - **XGBoost** cho huấn luyện và đánh giá (binary & multiclass)
 
 MBTI_project/
-│── data/ # Nơi chứa dataset gốc & file đã xử lý
-│ ├── mbti_1.csv
-│ ├── mbti_clean.csv
-│ ├── mbti_1_augmentednclean.csv
-│ ├── training_pipeline.png
-│ ├── Inference_pipeline.png
-│ ├── eda_label_distribution(clean+balanced).png
-│ └── eda_label_distribution(unprocessed).png
 │
-│── sbert_all-MiniLM-L6-v2 # Lưu model
+├── data/                 # Contains raw, cleaned, and augmented datasets
+│   ├── mbti_1.csv
+│   ├── mbti_clean.csv
+│   └── mbti_1_augmentednclean.csv
 │
-│── src/ # Code chính
-│ ├── 1_view_data.py # EDA: thống kê, visualization
-│ ├── 2.1_data_clean.py # Làm sạch dữ liệu (remove link,…)
-│ ├── 2.2_data_augmentation.py # Data augmentation với WordNet
-│ ├── 3.1_training_binary.py # Huấn luyện 4 mô hình nhị phân (EI, SN, TF, JP)
-│ ├── 3.2_training_XGBoost.py # Huấn luyện mô hình đa lớp (16 MBTI types)
-│ ├── 4.1_evaBIN.py # Đánh giá mô hình Logistic Regression (binary)
-│ ├── 4.2_evaMUL.py # Đánh giá mô hình XGBoost (multiclass)
-│ ├── GPU_check.py # Kiểm tra đã sử dụng GPU chưa
-│ ├── embeddings_multiclass.npy # Lưu text embeddings
-│ ├── binary_model/ # Kết quả huấn luyện Binary
-│ └── multiclass_model/ # Kết quả huấn luyện Multiclass
+├── sbert_all-MiniLM-L6-v2/ # Stores the pre-trained Sentence Transformer model
 │
-│── demo.ipynb # demo
-│── requirements.txt # Danh sách thư viện
-│── README.md # Tài liệu này, hướng dẫn sử dụng
-├── config.py # Lưu biến cấu hình
+├── src/                  # Main source code
+│   ├── 1_view_data.py
+│   ├── 2.1_data_clean.py
+│   ├── 2.2_data_augmentation.py
+│   ├── 3.1_training_binary.py
+│   ├── 3.2_training_XGBoost.py
+│   ├── 4.1_evaBIN.py
+│   ├── 4.2_evaMUL.py
+│   ├── binary_model/       # Stores trained binary classification models (.joblib) and reports (.json)
+│   └── multiclass_model/   # Stores trained multi-class model and evaluation results
+│
+├── config.py             # Configuration variables (paths, parameters)
+├── demo.ipynb            # Jupyter Notebook for the Gradio-based interactive demo
+├── requirements.txt      # List of Python dependencies
+└── README.md             # Project documentation
 
 
 Pretrained Model --> .joblib
