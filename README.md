@@ -1,9 +1,9 @@
 # MBTI Personality Classification (NLP + XGBoost)
 
-Dự án này xây dựng một hệ thống phân loại **MBTI personality types** dựa trên văn bản (posts), sử dụng:
-- **Data preprocessing** (clean + augmentation)
-- **Sentence Transformers** để sinh embedding
-- **XGBoost** cho huấn luyện và đánh giá (binary & multiclass)
+This project develops a system for classifying **MBTI personality types** based on textual posts, using:
+- **Data preprocessing** (cleaning + augmentation)
+- **Sentence Transformers** for embedding generation
+- **XGBoost** for training and evaluation  (both binary & multiclass)
 ```
 MBTI_project/
 │
@@ -36,7 +36,7 @@ Pretrained Model --> .joblib \n
 Summary --> .json
 
 
-## ⚙️ Cài đặt môi trường
+## ⚙️ Environment Setup
 
 ### 1. Clone repo + Setup
 ```bash
@@ -49,9 +49,9 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 ## Hướng dẫn chạy code
-1. Chuẩn bị dữ liệu
-Đặt file dữ liệu gốc mbti_1.csv vào thư mục data/.
-File này sẽ được xử lý thành nhiều version khác nhau trong quá trình chạy.
+1. Prepare the dataset
+Place the original file mbti_1.csv inside the data/ directory.
+This file will be processed into multiple versions during execution.
 
 
 2. Data Filtering
@@ -76,13 +76,13 @@ Output: data/mbti_1_augmentednclean.csv
 ```bash
 python src/3.1_training_binary.py
 ```
-Output: mô hình XGBoost nhị phân trong thư mục binary_model/
+Output: Model XGBoost Binary inside the binary_model/ directory.
 
 4.2. Multiclass classification 
 ```bash
 Run: python src/3.2_training_XGBoost.py
 ```
-Output: mô hình XGBoost đa lớp trong thư mục multiclass_model/
+Output: Model XGBoost Multiclass inside the multiclass_model/ directory.
 
 
 5. Evaluation
@@ -102,6 +102,6 @@ Output: multiclass_model/confusion_matrix_test.png + classification report
 
 6. Demo Inference
 ```bash
-jupyter notebook demo.ipynb
+jupyter notebook demo.ipynb # http://127.0.0.1:7860
 ```
-Mở notebook và chạy các cell để mở UI qua Gradio 
+Open Jupyter notebook and run demo UI through Gradio.
