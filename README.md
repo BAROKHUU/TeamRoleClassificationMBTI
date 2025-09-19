@@ -48,7 +48,7 @@ venv\Scripts\activate      # Windows
 
 pip install -r requirements.txt
 ```
-## Hướng dẫn chạy code
+## 🚀 How to Run the Code
 1. Prepare the dataset
 Place the original file mbti_1.csv inside the data/ directory.
 This file will be processed into multiple versions during execution.
