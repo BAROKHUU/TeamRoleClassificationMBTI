@@ -32,7 +32,7 @@ X_texts = df["posts"].astype(str).tolist()
 y_types = df["type"].astype(str).str.upper().tolist()
 
 # --- Embedding ---
-# Hàm này không thay đổi so với script multiclass
+# This function will not change compared to script multiclass
 def encode_posts(posts, embedder):
     parts = posts.split("|||")
     emb = embedder.encode(parts, convert_to_numpy=True, batch_size=BATCH_SIZE)
@@ -48,7 +48,7 @@ else:
     print("Loading cached embeddings...")
     X_emb = np.load(EMB_CACHE)
 
-# --- Tạo 4 bộ nhãn nhị phân ---
+# --- Create 4 Binary Labels ---
 tasks = {
     "EI": [t[0] for t in y_types],
     "SN": [t[1] for t in y_types],
@@ -56,21 +56,21 @@ tasks = {
     "JP": [t[3] for t in y_types],
 }
 
-# --- Vòng lặp huấn luyện 4 mô hình nhị phân ---
+# --- Training loop for 4 Binary models ---
 for task_name, labels in tasks.items():
     print(f"\n{'='*20} TRAINING FOR: {task_name} {'='*20}")
     
     task_output_dir = os.path.join(OUTPUT_DIR, task_name)
     os.makedirs(task_output_dir, exist_ok=True)
 
-    # --- Mã hóa nhãn (ví dụ: 'E' -> 0, 'I' -> 1) ---
+    # --- Encoding Labels (Ex: 'E' -> 0, 'I' -> 1) ---
     le = LabelEncoder()
     y = le.fit_transform(labels)
     # Tạo mapping để tham chiếu sau này
     label2id = {label: int(idx) for label, idx in zip(le.classes_, le.transform(le.classes_))}
     id2label = {int(idx): label for label, idx in label2id.items()}
     
-    # --- Train/Val/Test Split (70/15/15) - Logic tương tự script multiclass ---
+    # --- Train/Val/Test Split (70/15/15) - Same Logic in script multiclass ---
     X_temp, X_test, y_temp, y_test = train_test_split(
         X_emb, y, test_size=0.15, random_state=RANDOM_STATE, stratify=y
     )
@@ -81,9 +81,9 @@ for task_name, labels in tasks.items():
     print(f"Dataset split for {task_name}: train={len(X_train)}, val={len(X_val)}, test={len(X_test)}")
 
     # --- Model: XGBoost binary ---
-    # Sử dụng các tham số tương tự multiclass để dễ so sánh
+    # Using the same parameters for multiclass for comparision
     clf = xgb.XGBClassifier(
-        objective="binary:logistic",  # Thay đổi objective cho bài toán nhị phân
+        objective="binary:logistic",  # change objective for Binary problem
         eval_metric="logloss",
         n_estimators=1000,
         learning_rate=0.001,
@@ -95,14 +95,14 @@ for task_name, labels in tasks.items():
         device="cuda" if device == "cuda" else "cpu",
         n_jobs=-1,
         verbosity=1,
-        # Thêm early stopping để tránh overfitting và tìm số vòng lặp tối ưu
+        # Early Stopping to avoid Overfitting and find best iteration
     )
 
     print(f"Training XGBoost for {task_name}...")
-    # Thêm X_train, y_train vào eval_set để vẽ được cả train loss
+    # Include X_train, y_train into eval_set to draw train loss
     clf.fit(X_train, y_train, eval_set=[(X_train, y_train), (X_val, y_val)], verbose=20)
 
-    # --- Đánh giá trên tập validation ---
+    # --- Evaluate on validation ---
     y_val_pred = clf.predict(X_val)
     val_acc = accuracy_score(y_val, y_val_pred)
     val_f1 = f1_score(y_val, y_val_pred, average="macro")

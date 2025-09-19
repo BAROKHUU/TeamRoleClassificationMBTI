@@ -6,10 +6,10 @@ import nltk
 nltk.download('punkt_tab')
 nltk.download('wordnet')
 import config
-# ---- 1. Load dữ liệu ----
+# ---- 1. Load data ----
 df = pd.read_csv(config.CLEAN_DATA_PATH)
 
-# ---- 2. Định nghĩa hàm augment ----
+# ---- 2. Define augmenting function ----
 def synonym_replacement(sentence, n=1):
     """Thay thế ngẫu nhiên n từ bằng từ đồng nghĩa"""
     words = nltk.word_tokenize(sentence)
@@ -38,18 +38,18 @@ def rewrite_post(post, num_augments):
         new_posts.append(' '.join(new_sentences))
     return new_posts  # trả list câu augment
 
-# ---- 3. Xác định số lần augment cho từng nhãn ----
+# ---- 3. Define augmenting times for labels ----
 
 augment_1_time = config.AUGMENT_1_TIME
 augment_4_times = config.AUGMENT_4_TIME
 augmented_rows = []
 
-# ---- 4. Loop qua dữ liệu ----
+# ---- 4. Loop through data ----
 for idx, row in df.iterrows():
     t = row['type']
     post = row['posts']
 
-    # Tạo số lần augment theo nhãn
+    # Create augmenting times by labels
     if t in augment_4_times:
         num_augments = 4
     elif t in augment_1_time:
@@ -57,17 +57,17 @@ for idx, row in df.iterrows():
     else:
         num_augments = 0
 
-    # Nếu cần augment
+    # If need augment
     if num_augments > 0:
         new_posts = rewrite_post(post, num_augments)
         for np_ in new_posts:
             augmented_rows.append({'type': t, 'posts': np_})
 
-# ---- 5. Tạo DataFrame mới gồm dữ liệu cũ + augment ----
+# ---- 5. Create new DataFrame include old data + augmented ----
 aug_df = pd.DataFrame(augmented_rows)
 final_df = pd.concat([df, aug_df], ignore_index=True)
 
-# ---- 6. Xuất ra file mới ----
+# ---- 6. Export new file ----
 final_df.to_csv(config.FINAL_DATA_PATH, index=False)
 
 print("Số lượng dữ liệu sau augment:")
